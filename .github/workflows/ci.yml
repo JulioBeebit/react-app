@@ -15,7 +15,8 @@ jobs:
           node-version: "12.x"
 
       - run: npm ci
-      - run: CI=true npm test -- -- coverage
-       
+      - run: npm test -- --coverage
+        env:
+          CI: true
 
           
