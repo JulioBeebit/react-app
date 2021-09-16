@@ -3,6 +3,8 @@ name: CI
 on: 
   pull_request:
     branches: [develop]
+  push:
+    branches: [develop]
 
 jobs:
   build:
@@ -18,5 +20,12 @@ jobs:
       - run: npm test -- --coverage
         env:
           CI: true
+
+      - name: Build Project
+        if: github.event_name == 'push'
+        run: npm build
+      - name: Deploy build
+        if: github.event_name == 'push'
+        run: npx surge
 
           
