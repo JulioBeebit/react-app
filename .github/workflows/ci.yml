@@ -16,7 +16,7 @@ jobs:
         with: 
           path: ~/.npm
           key: ${{runner.os}}-mykey-${{hashFiles('**/package-lock.json')}}
-          restore-key: |
+          restore-keys: |
             ${{runner.os}}-mykey-
       - name: Use NodeJs
         uses: actions/setup-node@v1
@@ -27,10 +27,20 @@ jobs:
       - run: npm test -- --coverage
         env:
           CI: true
+      - name: Upload Test Coverage 
+        uses: actions/upload-artifact@v1
+        with: 
+          name: code-coverage
+          path: coverage 
 
       - name: Build Project
         if: github.event_name == 'push'
         run: npm run build
+      - name: Upload build report
+        uses: actions/upload-artifact@v1
+        with: 
+          name: build
+          path: build 
       - name: Deploy build
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain temporary-root.surge.sh
