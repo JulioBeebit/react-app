@@ -26,6 +26,9 @@ jobs:
         run: npm build
       - name: Deploy build
         if: github.event_name == 'push'
-        run: npx surge
+        run: npx surge --project ./build --domain temporary-root.surge.sh
+        env:
+          SURGE_LOGIN: ${{secrets.SURGE_LOGIN}}
+          SURGE_TOKEN: ${{secrets.SURGE_TOKEN}}
 
           
