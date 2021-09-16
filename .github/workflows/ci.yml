@@ -23,7 +23,7 @@ jobs:
 
       - name: Build Project
         if: github.event_name == 'push'
-        run: npm build
+        run: npm run build
       - name: Deploy build
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain temporary-root.surge.sh
